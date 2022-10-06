@@ -12,7 +12,7 @@ class UserController {
     const user = await UsersRepository.findById(id);
 
     if (!user) {
-      return response.status(404).json({error: 'User not found'})
+      return response.status(404).json({error: 'Usuário não encontrado'})
     }
 
     response.json(user);
