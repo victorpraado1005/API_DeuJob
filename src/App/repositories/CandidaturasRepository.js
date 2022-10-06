@@ -5,7 +5,11 @@ const db = require("../../database");
 class CandidaturasRepository {
   async findAll() {
     const rows = await db.query(`
-    SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+    SELECT candiatura.id, candiatura.id_vaga,
+    candiatura.id_candidato, usuario.email,
+    usuario.telefone, vagas.nome, vagas.descricao,
+    vagas.beneficios, vagas.requisitos,
+    usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
     FROM candiatura
     LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
     LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
@@ -16,11 +20,15 @@ class CandidaturasRepository {
   async findById(id) {
     const [row] = await db.query(
       `
-    SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
-    FROM candiatura
-    LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
-    LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
-    WHERE id = $1
+      SELECT candiatura.id, candiatura.id_vaga,
+      candiatura.id_candidato, usuario.email,
+      usuario.telefone, vagas.nome, vagas.descricao,
+      vagas.beneficios, vagas.requisitos,
+      usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+      FROM candiatura
+      LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
+      LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
+      WHERE id = $1
     `,
       [id]
     );
@@ -30,7 +38,10 @@ class CandidaturasRepository {
   async findByVagaId(vaga_id) {
     const rows = await db.query(
       `
-      SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+      SELECT candiatura.id, candiatura.id_vaga,
+      candiatura.id_candidato, usuario.email,
+      usuario.telefone, vagas.nome,
+      usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
       FROM candiatura
       LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
       LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
@@ -44,7 +55,10 @@ class CandidaturasRepository {
   async findByCandidatoId(candidato_id) {
     const rows = await db.query(
       `
-      SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+      SELECT candiatura.id, candiatura.id_vaga,
+      candiatura.id_candidato, usuario.email,
+      usuario.telefone, vagas.nome,
+      usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
       FROM candiatura
       LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
       LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
