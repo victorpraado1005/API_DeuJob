@@ -12,7 +12,6 @@ router.get('/', function (req, res){
 router.get('/users', UserController.index);
 router.get('/users/:id', UserController.show);
 router.post('/users', UserController.store);
-router.post('/users/login', UserController.login);
 router.put('/users/:id', UserController.update);
 
 module.exports = router;
