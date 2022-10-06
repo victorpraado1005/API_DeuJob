@@ -1,0 +1,66 @@
+const { v4 } = require('uuid');
+
+const db = require('../../database');
+
+class CandidaturasRepository {
+  async findAll() {
+    const rows = await db.query(`
+    SELECT *
+    FROM candiatura
+    `);
+    return rows;
+  }
+
+  async findById(id) {
+    const [ row ] = await db.query(`
+      SELECT * FROM candiatura
+      WHERE id = $1
+    `, [ id ]);
+    return row;
+  }
+
+  async findByVagaId(vaga_id) {
+    const rows = await db.query(`
+      SELECT * FROM candiatura
+      WHERE id_vaga = $1
+    `, [ vaga_id ]);
+    return rows;
+  }
+
+  async findByCandidatoId(candidato_id) {
+    const rows = await db.query(`
+      SELECT * FROM candiatura
+      WHERE id_candidato = $1
+    `, [ candidato_id ]);
+    return rows;
+  }
+
+  async create({
+    id_vaga, id_candidato
+  }) {
+    const [ row ] = await db.query(`
+      INSERT INTO candiatura(id_vaga, id_candidato)
+      VALUES($1, $2)
+      RETURNING *
+    `, [id_vaga, id_candidato]);
+
+    return row;
+  }
+
+  async update(id,{
+    id_vaga, id_candidato
+  }) {
+    const [ row ] = await db.query(`
+      UPDATE candiatura
+      SET id_vaga = $1, id_candidato = $2
+      WHERE id = $3
+      RETURNING *
+    `, [ id_vaga, id_candidato, id ]);
+
+    return row;
+  }
+
+}
+
+// Singleton
+module.exports = new CandidaturasRepository();
