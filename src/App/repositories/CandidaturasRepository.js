@@ -1,65 +1,86 @@
-const { v4 } = require('uuid');
+const { v4 } = require("uuid");
 
-const db = require('../../database');
+const db = require("../../database");
 
 class CandidaturasRepository {
   async findAll() {
     const rows = await db.query(`
-    SELECT *
+    SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
     FROM candiatura
+    LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
+    LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
     `);
     return rows;
   }
 
   async findById(id) {
-    const [ row ] = await db.query(`
-      SELECT * FROM candiatura
-      WHERE id = $1
-    `, [ id ]);
+    const [row] = await db.query(
+      `
+    SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+    FROM candiatura
+    LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
+    LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
+    WHERE id = $1
+    `,
+      [id]
+    );
     return row;
   }
 
   async findByVagaId(vaga_id) {
-    const rows = await db.query(`
-      SELECT * FROM candiatura
+    const rows = await db.query(
+      `
+      SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+      FROM candiatura
+      LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
+      LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
       WHERE id_vaga = $1
-    `, [ vaga_id ]);
+    `,
+      [vaga_id]
+    );
     return rows;
   }
 
   async findByCandidatoId(candidato_id) {
-    const rows = await db.query(`
-      SELECT * FROM candiatura
+    const rows = await db.query(
+      `
+      SELECT *, usuario.nome AS nome_candidato, vagas.nome AS nome_vaga
+      FROM candiatura
+      LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
+      LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
       WHERE id_candidato = $1
-    `, [ candidato_id ]);
+    `,
+      [candidato_id]
+    );
     return rows;
   }
 
-  async create({
-    id_vaga, id_candidato
-  }) {
-    const [ row ] = await db.query(`
+  async create({ id_vaga, id_candidato }) {
+    const [row] = await db.query(
+      `
       INSERT INTO candiatura(id_vaga, id_candidato)
       VALUES($1, $2)
       RETURNING *
-    `, [id_vaga, id_candidato]);
+    `,
+      [id_vaga, id_candidato]
+    );
 
     return row;
   }
 
-  async update(id,{
-    id_vaga, id_candidato
-  }) {
-    const [ row ] = await db.query(`
+  async update(id, { id_vaga, id_candidato }) {
+    const [row] = await db.query(
+      `
       UPDATE candiatura
       SET id_vaga = $1, id_candidato = $2
       WHERE id = $3
       RETURNING *
-    `, [ id_vaga, id_candidato, id ]);
+    `,
+      [id_vaga, id_candidato, id]
+    );
 
     return row;
   }
-
 }
 
 // Singleton
