@@ -3,90 +3,57 @@ require('express-async-error');
 
 class UserController {
   async index(request, response) {
-    const contact = await UsersRepository.findAll();
-    response.json(contact);
+    const usuario = await UsersRepository.findAll();
+    response.json(usuario);
   }
 
   async show(request, response) {
     const { id } = request.params;
-    const user = await UsersRepository.findById(id);
+    const usuario = await UsersRepository.findById(id);
 
-    if (!user) {
+    if (!usuario) {
       return response.status(404).json({error: 'Usuário não encontrado'})
     }
 
-    response.json(user);
+    response.json(usuario);
   }
 
-  async login (request, response) {
-    const { email, password } = request.body;
-    const user = await UsersRepository.findUserByEmailAndPassword(email, password);
+  // async login (request, response) {
+  //   const { email, password } = request.body;
+  //   const user = await UsersRepository.findUserByEmailAndPassword(email, password);
 
-    if (!user){
-      return response.status(404).json({ error: 'E-mail or password are incorrect' })
-    }
+  //   if (!user){
+  //     return response.status(404).json({ error: 'E-mail or password are incorrect' })
+  //   }
 
-    response.json(user);
-  }
+  //   response.json(user);
+  // }
 
   async store (request, response) {
     //Criar novo registro
     const {
-      name, email, phone, address, cep, city, estado, gender, assinante, password
+      nome, email, senha, telefone, pontos
     } = request.body;
 
-    if (!name) {
-      return response.status(400).json({ error: 'Name is required!' });
-    }
 
-    if (!email){
-      return response.status(400).json({ error: 'Email is required!' });
-    }
-
-    const emailExists = await UsersRepository.findByEmail(email);
-    if (emailExists){
-      return response.status(400).json({ error: 'This e-mail is already in use' });
-    }
-
-    if (!phone){
-      return response.status(400).json({ error: 'Phone is required!' });
-    }
-
-    const contact = await UsersRepository.create({
-      name, email, phone, address, cep, city, estado, gender, assinante, password
+    const usuario = await UsersRepository.create({
+      nome, email, senha, telefone, pontos
     });
 
-    response.status(201).json(contact);
+    response.status(201).json(usuario);
   }
 
   async update(request, response) {
     const { id } = request.params;
     const {
-      name, email, phone, address, cep, city, estado, gender, date_of_birth, assinante
+      nome, email, senha, telefone, pontos
     } = request.body;
 
-    const userExists = await UsersRepository.findById(id);
-    if (!userExists) {
-      return response.status(400).json({error: 'User not found'});
-    }
-
-    if (!name) {
-      return response.status(400).json({ error: 'Name is required!' });
-    }
-
-    if (!email){
-      return response.status(400).json({ error: 'Email is required!' });
-    }
-
-    if (!phone){
-      return response.status(400).json({ error: 'Phone is required!' });
-    }
-
-    const user = await UsersRepository.update(id, {
-      name, email, phone, address, cep, city, estado, gender, date_of_birth, assinante
+    const usuario = await UsersRepository.update(id, {
+      nome, email, senha, telefone, pontos
     });
 
-    response.json(user);
+    response.json(usuario);
   }
 }
 

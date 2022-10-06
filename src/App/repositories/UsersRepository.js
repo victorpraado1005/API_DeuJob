@@ -2,18 +2,18 @@ const { v4 } = require('uuid');
 
 const db = require('../../database');
 
-class UsersRepository {
+class usuarioRepository {
   async findAll() {
     const rows = await db.query(`
-    SELECT users.id, users.name, email, phone
-    FROM users
+    SELECT *
+    FROM usuario
     `);
     return rows;
   }
 
   async findById(id) {
     const [ row ] = await db.query(`
-      SELECT * FROM users
+      SELECT * FROM usuario
       WHERE id = $1
     `, [ id ]);
     return row;
@@ -22,7 +22,7 @@ class UsersRepository {
   async findByEmail(email){
     const [ row ] = await db.query(`
       SELECT email
-      FROM users
+      FROM usuario
       WHERE email = $1
     `, [ email ]);
     return row;
@@ -31,34 +31,33 @@ class UsersRepository {
   async findUserByEmailAndPassword(email, password) {
     const [ row ] = await db.query(`
       SELECT id, name
-      FROM users
+      FROM usuario
       WHERE email = $1 AND password = $2
     `, [ email, password ]);
     return row;
   }
 
   async create({
-    name, email, phone, address, cep, city, estado, gender, assinante, password
+    nome, email, senha, telefone, pontos
   }) {
     const [ row ] = await db.query(`
-      INSERT INTO users(name, email, phone, address, cep, city, estado, gender, assinante, password)
-      VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO usuario(nome, email, senha, telefone, pontos)
+      VALUES($1, $2, $3, $4, $5)
       RETURNING *
-    `, [name, email, phone, address, cep, city, estado, gender, assinante, password]);
+    `, [nome, email, senha, telefone, pontos]);
 
     return row;
   }
 
   async update(id,{
-    name, email, phone, address, cep, city, estado, gender, date_of_birth, assinante
+    nome, email, senha, telefone, pontos
   }) {
     const [ row ] = await db.query(`
-      UPDATE users
-      SET name = $1, email = $2, phone = $3, address = $4, cep = $5, city = $6,
-      estado = $7, gender = $8, date_of_birth = $9, assinante = $10
-      WHERE id = $11
+      UPDATE usuario
+      SET nome = $1, email = $2, senha = $3, telefone = $4, pontos = $5
+      WHERE id = $6
       RETURNING *
-    `, [ name, email, phone, address, cep, city, estado, gender, date_of_birth, assinante, id ]);
+    `, [ nome, email, senha, telefone, pontos, id ]);
 
     return row;
   }
@@ -66,4 +65,4 @@ class UsersRepository {
 }
 
 // Singleton
-module.exports = new UsersRepository();
+module.exports = new usuarioRepository();
