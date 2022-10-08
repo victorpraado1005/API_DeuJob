@@ -36,6 +36,10 @@ class CandidaturaController {
     const { vaga_id, user_id } = request.params;
     const candidato = await CandidaturasRepository.findCandidaturaByUserIdAndVagaId(vaga_id, user_id);
 
+    if (!candidato) {
+      return response.status(404).json({error: 'Candidatura não encontrada'})
+    }
+
     response.json(candidato);
   }
 
