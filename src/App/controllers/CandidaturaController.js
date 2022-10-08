@@ -32,6 +32,13 @@ class CandidaturaController {
     response.json(candidatos);
   }
 
+  async verificarCandidatura(request, response) {
+    const { vaga_id, user_id } = request.params;
+    const candidato = await CandidaturasRepository.findCandidaturaByUserIdAndVagaId(vaga_id, user_id);
+
+    response.json(candidato);
+  }
+
   async store (request, response) {
     //Criar novo registro
     const {

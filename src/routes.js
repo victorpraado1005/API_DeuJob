@@ -28,5 +28,6 @@ router.get('/candidatos/:vaga_id', CandidaturaController.showCandidatosByVagaId)
 router.get('/user/vagas/:candidato_id', CandidaturaController.showByCandidatoId);
 router.post('/candidatos', CandidaturaController.store);
 router.put('/candidatos/:id', CandidaturaController.update);
+router.get('/candidatura/:vaga_id/:user_id', CandidaturaController.verificarCandidatura);
 
 module.exports = router;

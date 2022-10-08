@@ -52,6 +52,18 @@ class CandidaturasRepository {
     return rows;
   }
 
+  async findCandidaturaByUserIdAndVagaId(vaga_id, user_id) {
+    const rows = await db.query(
+      `
+      select * from candiatura
+      where id_vaga = $1
+      and id_candidato = $2
+    `,
+      [vaga_id, user_id]
+    );
+    return rows;
+  }
+
   async findByCandidatoId(candidato_id) {
     const rows = await db.query(
       `
