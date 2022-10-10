@@ -38,9 +38,7 @@ class CandidaturasRepository {
   async findByVagaId(vaga_id) {
     const rows = await db.query(
       `
-      SELECT candiatura.*, usuario.email,
-      usuario.telefone, vagas.nome,
-      usuario.nome AS nome_candidato
+      SELECT candiatura.*, usuario.*
       FROM candiatura
       LEFT JOIN usuario ON usuario.id = candiatura.id_candidato
       LEFT JOIN vagas ON vagas.id = candiatura.id_vaga
