@@ -44,6 +44,14 @@ class VagaController {
 
     response.json(vaga);
   }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    await vagasRepository.delete(id);
+
+    response.sendStatus(204);
+  }
 }
 
 // Singleton

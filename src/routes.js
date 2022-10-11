@@ -21,6 +21,7 @@ router.get('/vagas', VagaController.index);
 router.get('/vagas/:id', VagaController.show);
 router.post('/vagas', VagaController.store);
 router.put('/vagas/:id', VagaController.update);
+router.delete('/vagas/:id', VagaController.delete);
 
 //candidatos
 router.get('/candidatos', CandidaturaController.index);
@@ -28,6 +29,7 @@ router.get('/candidatos/:vaga_id', CandidaturaController.showCandidatosByVagaId)
 router.get('/user/vagas/:candidato_id', CandidaturaController.showByCandidatoId);
 router.post('/candidatos', CandidaturaController.store);
 router.put('/candidatos/:id', CandidaturaController.update);
+router.delete('/candidatos/:id', CandidaturaController.delete);
 router.get('/candidatura/:vaga_id/:user_id', CandidaturaController.verificarCandidatura);
 
 module.exports = router;

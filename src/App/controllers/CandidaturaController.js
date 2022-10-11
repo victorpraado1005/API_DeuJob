@@ -69,6 +69,14 @@ class CandidaturaController {
 
     response.json(candidatura);
   }
+
+  async delete(request, response) {
+    const { vaga_id } = request.params;
+
+    await CandidaturasRepository.deleteByVagaId(vaga_id);
+
+    response.sendStatus(204);
+  }
 }
 
 // Singleton

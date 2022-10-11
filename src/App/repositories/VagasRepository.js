@@ -6,7 +6,7 @@ class vagasRepository {
   async findAll() {
     const rows = await db.query(`
     SELECT *
-    FROM vagas
+  FROM vagas
     `);
     return rows;
   }
@@ -42,6 +42,15 @@ class vagasRepository {
     `, [ nome, descricao, beneficios, requisitos, id ]);
 
     return row;
+  }
+
+  async delete(id){
+    const deleteOP = await db.query(`
+      DELETE FROM vagas
+      WHERE id = $1
+    `, [ id ]);
+
+    return deleteOP;
   }
 
 }

@@ -104,6 +104,15 @@ class CandidaturasRepository {
 
     return row;
   }
+
+  async deleteByVagaId(vaga_id) {
+    const deleteOP = await db.query(`
+      DELETE FROM candiatura
+      WHERE id_vaga = $1
+    `, [ vaga_id ]);
+
+    return deleteOP;
+  }
 }
 
 // Singleton
