@@ -37,15 +37,6 @@ class usuarioRepository {
     return row;
   }
 
-  async findUserByEmailAndPassword(email, password) {
-    const [ row ] = await db.query(`
-      SELECT id, name
-      FROM usuario
-      WHERE email = $1 AND password = $2
-    `, [ email, password ]);
-    return row;
-  }
-
   async create({
     nome, email, senha, telefone, pontos
   }) {
