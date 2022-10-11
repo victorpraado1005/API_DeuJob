@@ -9,6 +9,7 @@ const router = Router();
 router.get('/', function (req, res){
   res.send("Olá, estamos no ar!");
 });
+router.post('/users/login', UserController.login);
 
 //users
 router.get('/users', UserController.index);

@@ -18,16 +18,16 @@ class UserController {
     response.json(usuario);
   }
 
-  // async login (request, response) {
-  //   const { email, password } = request.body;
-  //   const user = await UsersRepository.findUserByEmailAndPassword(email, password);
+  async login (request, response) {
+    const { email, password } = request.body;
+    const user = await UsersRepository.findUserByEmailAndPassword(email, password);
 
-  //   if (!user){
-  //     return response.status(404).json({ error: 'E-mail or password are incorrect' })
-  //   }
+    if (!user){
+      return response.status(404).json({ error: 'E-mail or password are incorrect' })
+    }
 
-  //   response.json(user);
-  // }
+    response.json(user);
+  }
 
   async store (request, response) {
     //Criar novo registro
