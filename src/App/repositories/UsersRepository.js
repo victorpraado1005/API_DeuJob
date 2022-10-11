@@ -28,12 +28,12 @@ class usuarioRepository {
     return row;
   }
 
-  async findUserByEmailAndPassword(email, password) {
+  async findUserByEmailAndPassword(email, senha) {
     const [ row ] = await db.query(`
       SELECT id, nome
       FROM usuario
       WHERE email = $1 AND senha = $2
-    `, [ email, password ]);
+    `, [ email, senha ]);
     return row;
   }
 

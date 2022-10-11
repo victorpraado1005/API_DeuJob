@@ -19,8 +19,8 @@ class UserController {
   }
 
   async login (request, response) {
-    const { email, password } = request.body;
-    const user = await UsersRepository.findUserByEmailAndPassword(email, password);
+    const { email, senha } = request.body;
+    const user = await UsersRepository.findUserByEmailAndPassword(email, senha);
 
     if (!user){
       return response.status(404).json({ error: 'E-mail or password are incorrect' })
