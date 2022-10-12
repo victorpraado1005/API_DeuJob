@@ -62,7 +62,7 @@ class UserController {
       nome, email, telefone, genero, cidade, estado
     } = request.body;
 
-    const usuario = await UsersRepository.update(id, {
+    const usuario = await UsersRepository.updateInfoPessoal(id, {
       nome, email, telefone, genero, cidade, estado
     });
 
