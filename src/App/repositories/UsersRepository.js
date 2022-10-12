@@ -62,6 +62,19 @@ class usuarioRepository {
     return row;
   }
 
+  async updatePontos(id,{
+    pontos
+  }) {
+    const [ row ] = await db.query(`
+      UPDATE usuario
+      SET pontos = $1
+      WHERE id = $2
+      RETURNING *
+    `, [ pontos, id ]);
+
+    return row;
+  }
+
 }
 
 // Singleton

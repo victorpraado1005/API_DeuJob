@@ -55,6 +55,19 @@ class UserController {
 
     response.json(usuario);
   }
+
+  async updatePontos(request, response) {
+    const { id } = request.params;
+    const {
+      pontos
+    } = request.body;
+
+    const usuario = await UsersRepository.updatePontos(id, {
+      pontos
+    });
+
+    response.json(usuario);
+  }
 }
 
 // Singleton
