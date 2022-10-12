@@ -56,6 +56,19 @@ class UserController {
     response.json(usuario);
   }
 
+  async updateInfoPessoal(request, response) {
+    const { id } = request.params;
+    const {
+      nome, email, telefone, genero, cidade, estado
+    } = request.body;
+
+    const usuario = await UsersRepository.update(id, {
+      nome, email, telefone, genero, cidade, estado
+    });
+
+    response.json(usuario);
+  }
+
   async updatePontos(request, response) {
     const { id } = request.params;
     const {

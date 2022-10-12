@@ -49,6 +49,19 @@ class usuarioRepository {
     return row;
   }
 
+  async updateInfoPessoal(id,{
+    nome, email, telefone, genero, cidade, estado
+  }) {
+    const [ row ] = await db.query(`
+      UPDATE usuario
+      SET nome = $1, email = $2, telefone = $3, genero = $4, cidade = $5, estado = $6
+      WHERE id = $7
+      RETURNING *
+    `, [ nome, email, telefone, genero, cidade, estado, id ]);
+
+    return row;
+  }
+
   async update(id,{
     nome, email, senha, telefone, pontos
   }) {

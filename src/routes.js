@@ -17,6 +17,7 @@ router.get('/users/:id', UserController.show);
 router.post('/users', UserController.store);
 router.put('/users/:id', UserController.update);
 router.put('/users/pontos/:id', UserController.updatePontos);
+router.put('/users/infoPessoal/:id', UserController.updateInfoPessoal);
 
 //vagas
 router.get('/vagas', VagaController.index);
