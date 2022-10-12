@@ -62,6 +62,19 @@ class usuarioRepository {
     return row;
   }
 
+  async updateInfoProfissional(id,{
+    formacao_academica, habilidades, historico_profissional, pretensao_salarial
+  }) {
+    const [ row ] = await db.query(`
+      UPDATE usuario
+      SET formacao_academica = $1, habilidades = $2, historico_profissional = $3, pretensao_salarial = $4
+      WHERE id = $5
+      RETURNING *
+    `, [ formacao_academica, habilidades, historico_profissional, pretensao_salarial, id ]);
+
+    return row;
+  }
+
   async update(id,{
     nome, email, senha, telefone, pontos
   }) {

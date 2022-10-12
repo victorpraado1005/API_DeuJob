@@ -69,6 +69,19 @@ class UserController {
     response.json(usuario);
   }
 
+  async updateInfoProfissional(request, response) {
+    const { id } = request.params;
+    const {
+      formacao_academica, habilidades, historico_profissional, pretensao_salarial
+    } = request.body;
+
+    const usuario = await UsersRepository.updateInfoProfissional(id, {
+      formacao_academica, habilidades, historico_profissional, pretensao_salarial
+    });
+
+    response.json(usuario);
+  }
+
   async updatePontos(request, response) {
     const { id } = request.params;
     const {
