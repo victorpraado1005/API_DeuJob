@@ -113,6 +113,15 @@ class CandidaturasRepository {
 
     return deleteOP;
   }
+
+  async deleteById(id) {
+    const deleteOP = await db.query(`
+      DELETE FROM candiatura
+      WHERE id = $1
+    `, [ id ]);
+
+    return deleteOP;
+  }
 }
 
 // Singleton

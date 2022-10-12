@@ -77,6 +77,14 @@ class CandidaturaController {
 
     response.sendStatus(204);
   }
+
+  async deleteById(request, response) {
+    const { id } = request.params;
+
+    await CandidaturasRepository.deleteById(id);
+
+    response.sendStatus(204);
+  }
 }
 
 // Singleton
